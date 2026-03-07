@@ -1,4 +1,6 @@
 // ─── CONFIG ────────────────────────────────────────────────────────────────
+// On Vercel: frontend and API are on the same domain
+// Locally: set window.API_BASE_URL = 'http://localhost:8000' before this loads
 const API_BASE = window.API_BASE_URL || '';
 
 // ─── CORE REQUEST ───────────────────────────────────────────────────────────
@@ -28,31 +30,31 @@ async function request(method, endpoint, body = null, auth = false) {
 // ─── AUTH ───────────────────────────────────────────────────────────────────
 const Auth = {
   register: (email, username, password) =>
-    request('POST', '/auth/register', { email, username, password }),
+    request('POST', '/api/auth/register', { email, username, password }),
 
   login: (email, password) =>
-    request('POST', '/auth/login', { email, password }),
+    request('POST', '/api/auth/login', { email, password }),
 
   me: () =>
-    request('GET', '/auth/me', null, true),
+    request('GET', '/api/auth/me', null, true),
 };
 
 // ─── DESTINATIONS ───────────────────────────────────────────────────────────
 const Destinations = {
   create: (data) =>
-    request('POST', '/destinations/', data, true),
+    request('POST', '/api/destinations/', data, true),
 
   getMy: () =>
-    request('GET', '/destinations/my', null, true),
+    request('GET', '/api/destinations/my', null, true),
 
   getOne: (id) =>
-    request('GET', `/destinations/${id}`),
+    request('GET', `/api/destinations/${id}`),
 
   update: (id, data) =>
-    request('PUT', `/destinations/${id}`, data, true),
+    request('PUT', `/api/destinations/${id}`, data, true),
 
   delete: (id) =>
-    request('DELETE', `/destinations/${id}`, null, true),
+    request('DELETE', `/api/destinations/${id}`, null, true),
 };
 
 // ─── EXPLORE ────────────────────────────────────────────────────────────────
@@ -64,44 +66,44 @@ const Explore = {
     if (params.visited !== undefined) q.set('visited', params.visited);
     if (params.skip)    q.set('skip', params.skip);
     if (params.limit)   q.set('limit', params.limit);
-    return request('GET', `/explore/?${q}`);
+    return request('GET', `/api/explore/?${q}`);
   },
 
   featured: () =>
-    request('GET', '/explore/featured'),
+    request('GET', '/api/explore/featured'),
 
   getOne: (id) =>
-    request('GET', `/explore/destination/${id}`),
+    request('GET', `/api/destinations/${id}`),
 };
 
 // ─── COMMENTS ───────────────────────────────────────────────────────────────
 const Comments = {
   add: (destId, content) =>
-    request('POST', `/comments/${destId}`, { content }, true),
+    request('POST', `/api/comments/${destId}`, { content }, true),
 
   get: (destId) =>
-    request('GET', `/comments/${destId}`),
+    request('GET', `/api/comments/${destId}`),
 
   delete: (commentId) =>
-    request('DELETE', `/comments/${commentId}`, null, true),
+    request('DELETE', `/api/comments/${commentId}`, null, true),
 };
 
 // ─── LIKES ──────────────────────────────────────────────────────────────────
 const Likes = {
   toggle: (destId) =>
-    request('POST', `/likes/${destId}`, null, true),
+    request('POST', `/api/likes/${destId}`, null, true),
 };
 
 // ─── PROFILE ────────────────────────────────────────────────────────────────
 const Profile = {
   getMe: () =>
-    request('GET', '/profile/me', null, true),
+    request('GET', '/api/profile/me', null, true),
 
   updateMe: (data) =>
-    request('PUT', '/profile/me', data, true),
+    request('PUT', '/api/profile/me', data, true),
 
   getUser: (username) =>
-    request('GET', `/profile/${username}`),
+    request('GET', `/api/profile/${username}`),
 };
 
 // ─── TOKEN MANAGEMENT ───────────────────────────────────────────────────────
