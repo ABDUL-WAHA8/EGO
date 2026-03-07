@@ -1,9 +1,5 @@
-// ─── CONFIG ────────────────────────────────────────────────────────────────
-// On Vercel: frontend and API are on the same domain
-// Locally: set window.API_BASE_URL = 'http://localhost:8000' before this loads
 const API_BASE = window.API_BASE_URL || '';
 
-// ─── CORE REQUEST ───────────────────────────────────────────────────────────
 async function request(method, endpoint, body = null, auth = false) {
   const headers = { 'Content-Type': 'application/json' };
 
@@ -27,7 +23,7 @@ async function request(method, endpoint, body = null, auth = false) {
   return data;
 }
 
-// ─── AUTH ───────────────────────────────────────────────────────────────────
+// AUTH
 const Auth = {
   register: (email, username, password) =>
     request('POST', '/api/auth/register', { email, username, password }),
@@ -39,16 +35,16 @@ const Auth = {
     request('GET', '/api/auth/me', null, true),
 };
 
-// ─── DESTINATIONS ───────────────────────────────────────────────────────────
+// DESTINATIONS
 const Destinations = {
   create: (data) =>
-    request('POST', '/api/destinations/', data, true),
+    request('POST', '/api/destinations', data, true),
 
   getMy: () =>
     request('GET', '/api/destinations/my', null, true),
 
   getOne: (id) =>
-    request('GET', `/api/destinations/${id}`),
+    request('GET', `/api/destinations/${id}`, null, false),
 
   update: (id, data) =>
     request('PUT', `/api/destinations/${id}`, data, true),
@@ -57,26 +53,26 @@ const Destinations = {
     request('DELETE', `/api/destinations/${id}`, null, true),
 };
 
-// ─── EXPLORE ────────────────────────────────────────────────────────────────
+// EXPLORE
 const Explore = {
   browse: (params = {}) => {
     const q = new URLSearchParams();
     if (params.search)  q.set('search', params.search);
     if (params.country) q.set('country', params.country);
-    if (params.visited !== undefined) q.set('visited', params.visited);
     if (params.skip)    q.set('skip', params.skip);
     if (params.limit)   q.set('limit', params.limit);
-    return request('GET', `/api/explore/?${q}`);
+    const qs = q.toString();
+    return request('GET', `/api/explore${qs ? '?' + qs : ''}`);
   },
 
   featured: () =>
     request('GET', '/api/explore/featured'),
 
   getOne: (id) =>
-    request('GET', `/api/destinations/${id}`),
+    request('GET', `/api/destinations/${id}`, null, false),
 };
 
-// ─── COMMENTS ───────────────────────────────────────────────────────────────
+// COMMENTS
 const Comments = {
   add: (destId, content) =>
     request('POST', `/api/comments/${destId}`, { content }, true),
@@ -88,13 +84,13 @@ const Comments = {
     request('DELETE', `/api/comments/${commentId}`, null, true),
 };
 
-// ─── LIKES ──────────────────────────────────────────────────────────────────
+// LIKES
 const Likes = {
   toggle: (destId) =>
     request('POST', `/api/likes/${destId}`, null, true),
 };
 
-// ─── PROFILE ────────────────────────────────────────────────────────────────
+// PROFILE
 const Profile = {
   getMe: () =>
     request('GET', '/api/profile/me', null, true),
@@ -106,48 +102,19 @@ const Profile = {
     request('GET', `/api/profile/${username}`),
 };
 
-// ─── TOKEN MANAGEMENT ───────────────────────────────────────────────────────
-function getToken() {
-  return localStorage.getItem('tbl_token');
-}
+// TOKEN MANAGEMENT
+function getToken()      { return localStorage.getItem('tbl_token'); }
+function setToken(t)     { localStorage.setItem('tbl_token', t); }
+function removeToken()   { localStorage.removeItem('tbl_token'); localStorage.removeItem('tbl_user'); }
+function getCachedUser() { try { return JSON.parse(localStorage.getItem('tbl_user')); } catch { return null; } }
+function setCachedUser(u){ localStorage.setItem('tbl_user', JSON.stringify(u)); }
+function isLoggedIn()    { return !!getToken(); }
 
-function setToken(token) {
-  localStorage.setItem('tbl_token', token);
-}
-
-function removeToken() {
-  localStorage.removeItem('tbl_token');
-  localStorage.removeItem('tbl_user');
-}
-
-function getCachedUser() {
-  try {
-    return JSON.parse(localStorage.getItem('tbl_user'));
-  } catch {
-    return null;
-  }
-}
-
-function setCachedUser(user) {
-  localStorage.setItem('tbl_user', JSON.stringify(user));
-}
-
-function isLoggedIn() {
-  return !!getToken();
-}
-
-// Redirect to login if not authenticated
 function requireAuth() {
-  if (!isLoggedIn()) {
-    window.location.href = '/login.html';
-    return false;
-  }
+  if (!isLoggedIn()) { window.location.href = '/login.html'; return false; }
   return true;
 }
 
-// Redirect to dashboard if already logged in
 function redirectIfLoggedIn() {
-  if (isLoggedIn()) {
-    window.location.href = '/dashboard.html';
-  }
+  if (isLoggedIn()) window.location.href = '/dashboard.html';
 }

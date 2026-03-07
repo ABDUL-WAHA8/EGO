@@ -4,9 +4,7 @@
     {
       "src": "api/index.py",
       "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "50mb"
-      }
+      "config": { "maxLambdaSize": "50mb" }
     },
     {
       "src": "frontend/**",
@@ -14,29 +12,12 @@
     }
   ],
   "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "api/index.py"
-    },
-    {
-      "src": "/api",
-      "dest": "api/index.py"
-    },
-    {
-      "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf))",
-      "dest": "frontend/$1"
-    },
-    {
-      "src": "/(login|register|dashboard|explore|destination|profile)\\.html",
-      "dest": "frontend/$1.html"
-    },
-    {
-      "src": "/",
-      "dest": "frontend/index.html"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "frontend/$1"
-    }
+    { "src": "/api/(.*)", "dest": "api/index.py" },
+    { "src": "/api",      "dest": "api/index.py" },
+    { "src": "/css/(.*)", "dest": "frontend/css/$1" },
+    { "src": "/js/(.*)",  "dest": "frontend/js/$1" },
+    { "src": "/(login|register|dashboard|explore|destination|profile)\\.html", "dest": "frontend/$1.html" },
+    { "src": "/",         "dest": "frontend/index.html" },
+    { "src": "/(.*)",     "dest": "frontend/$1" }
   ]
 }
