@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wanderlist — Your Travel Bucket List</title>
+  <meta name="description" content="Build your travel bucket list, discover destinations, and share your adventures with the world." />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/pages/home.css" />
+</head>
+<body>
+
+<!-- ─── NAVBAR ─────────────────────────────────────────────────────────────── -->
+<nav class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-logo">
+      <div class="navbar-logo-mark">✈</div>
+      <span class="navbar-logo-text">Wander<span>list</span></span>
+    </a>
+    <nav class="navbar-nav">
+      <a href="index.html" class="nav-link active">Home</a>
+      <a href="explore.html" class="nav-link">Explore</a>
+      <a href="dashboard.html" class="nav-link">My List</a>
+    </nav>
+    <div class="navbar-right" data-auth-area></div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="navbar-mobile-menu" id="mobile-menu">
+  <a href="index.html" class="nav-link active">Home</a>
+  <a href="explore.html" class="nav-link">Explore</a>
+  <a href="dashboard.html" class="nav-link">My List</a>
+  <hr class="divider" />
+  <a href="login.html" class="nav-link">Sign In</a>
+  <a href="register.html" class="btn btn-primary btn-sm" style="align-self:flex-start">Get Started</a>
+</div>
+
+<!-- ─── HERO ────────────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-bg">
+    <img
+      class="hero-bg-image"
+      src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1600&q=80&auto=format"
+      alt="World travel"
+    />
+    <div class="hero-bg-gradient"></div>
+    <div class="hero-bg-particles"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Your journey starts here</div>
+    <h1 class="hero-title">
+      Dream it.<br>
+      <em>Plan it.</em><br>
+      Live it.
+    </h1>
+    <p class="hero-subtitle">
+      Build your ultimate travel bucket list, explore destinations shared by adventurers worldwide, and track every place you've conquered.
+    </p>
+    <div class="hero-cta">
+      <a href="register.html" class="btn btn-primary btn-lg">Start Your List</a>
+      <a href="explore.html" class="btn btn-secondary btn-lg">Explore Destinations</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-value" id="stat-users">—</div>
+        <div class="hero-stat-label">Adventurers</div>
+      </div>
+      <div>
+        <div class="hero-stat-value" id="stat-destinations">—</div>
+        <div class="hero-stat-label">Destinations</div>
+      </div>
+      <div>
+        <div class="hero-stat-value" id="stat-countries">—</div>
+        <div class="hero-stat-label">Countries</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FEATURES ─────────────────────────────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Why Wanderlist</div>
+      <h2 class="section-title">Everything you need to fuel your wanderlust</h2>
+      <p class="section-desc">From planning to memories — manage your entire travel journey in one beautiful place.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🗺️</div>
+        <h3>Personal Bucket List</h3>
+        <p>Add destinations with notes, descriptions, and images. Mark them as visited as you conquer the world.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌍</div>
+        <h3>Explore & Discover</h3>
+        <p>Browse thousands of destinations shared by fellow travelers. Get inspired by their adventures and tips.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <h3>Tips & Comments</h3>
+        <p>Share insider knowledge, travel tips, and experiences on any destination. Learn from others who've been there.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">♥</div>
+        <h3>Like & Save</h3>
+        <p>Heart destinations that catch your eye. Build a collection of inspiration from around the globe.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>Smart Search</h3>
+        <p>Find any destination instantly. Search by place name, city, or country to discover exactly what you want.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">✈️</div>
+        <h3>Track Progress</h3>
+        <p>See your stats at a glance — how many places you've visited, how many are still on your list.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FEATURED DESTINATIONS ─────────────────────────────────────────────────── -->
+<section class="section featured-section">
+  <div class="container">
+    <div class="section-header flex-between" style="flex-wrap:wrap;gap:16px">
+      <div>
+        <div class="section-eyebrow">Community Picks</div>
+        <h2 class="section-title" style="font-size:clamp(28px,3vw,42px)">Trending Destinations</h2>
+      </div>
+      <a href="explore.html" class="btn btn-secondary">View All →</a>
+    </div>
+    <div class="grid-3" id="featured-grid">
+      <!-- Populated by JS -->
+      <div class="skeleton" style="height:320px;border-radius:16px"></div>
+      <div class="skeleton" style="height:320px;border-radius:16px"></div>
+      <div class="skeleton" style="height:320px;border-radius:16px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA ───────────────────────────────────────────────────────────────────── -->
+<section class="section">
+  <div class="cta-section">
+    <h2>Ready to see the world?</h2>
+    <p>Join thousands of travelers already building their dream bucket lists.</p>
+    <div class="cta-buttons">
+      <a href="register.html" class="btn btn-primary btn-lg">Create Free Account</a>
+      <a href="explore.html" class="btn btn-secondary btn-lg">Browse Destinations</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="navbar-logo">
+        <div class="navbar-logo-mark">✈</div>
+        <span class="navbar-logo-text">Wander<span>list</span></span>
+      </a>
+      <p>Your personal travel bucket list. Dream destinations, real adventures, lifelong memories.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="explore.html">Explore</a></li>
+        <li><a href="dashboard.html">My List</a></li>
+        <li><a href="profile.html">Profile</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Account</h4>
+      <ul>
+        <li><a href="login.html">Sign In</a></li>
+        <li><a href="register.html">Register</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Wanderlist. Built with passion for travel.</span>
+    <span>Made with ✈ and ☕</span>
+  </div>
+</footer>
+
+<script src="js/api.js"></script>
+<script src="js/utils.js"></script>
+<script>
+  // Init navbar
+  initNavbar();
+
+  // Load featured destinations
+  async function loadFeatured() {
+    const grid = document.getElementById('featured-grid');
+    try {
+      const featured = await Explore.featured();
+      if (!featured.length) {
+        grid.innerHTML = '<p class="text-muted" style="grid-column:1/-1;text-align:center">No destinations yet. Be the first to add one!</p>';
+        return;
+      }
+      grid.innerHTML = featured.slice(0, 3).map(dest => destCardHTML(dest)).join('');
+      grid.querySelectorAll('.dest-card').forEach(card => {
+        card.addEventListener('click', () => {
+          window.location.href = `destination.html?id=${card.dataset.id}`;
+        });
+      });
+    } catch (e) {
+      grid.innerHTML = '';
+    }
+  }
+
+  // Animate stats (fake until real API)
+  function animateStat(id, target) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    let current = 0;
+    const step = Math.ceil(target / 40);
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) { el.textContent = target + '+'; clearInterval(timer); }
+      else el.textContent = current;
+    }, 30);
+  }
+
+  loadFeatured();
+  // Animate stats once in view
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        animateStat('stat-users', 500);
+        animateStat('stat-destinations', 1200);
+        animateStat('stat-countries', 80);
+        observer.disconnect();
+      }
+    });
+  });
+  observer.observe(document.querySelector('.hero-stats'));
+</script>
+</body>
+</html>
