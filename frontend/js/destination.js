@@ -31,7 +31,7 @@ function renderDestination(dest) {
   const heroEl = document.getElementById('dest-hero-media');
   if (heroEl) {
     if (dest.image_url) {
-      heroEl.innerHTML = `<img class="dest-hero-image" src="${dest.image_url}" alt="${dest.place_name}" onerror="this.outerHTML='<div class=\\"dest-hero-placeholder\\">🌍</div>'">`;
+      heroEl.innerHTML = `<img class="dest-hero-image" src="${dest.image_url}" alt="${dest.place_name}" onerror="this.style.display='none'">`;
     } else {
       heroEl.innerHTML = `<div class="dest-hero-placeholder">🌍</div>`;
     }

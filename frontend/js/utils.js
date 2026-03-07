@@ -145,7 +145,7 @@ function avatarHTML(user, size = 'md') {
 // ─── DESTINATION CARD HTML ────────────────────────────────────────────────────
 function destCardHTML(dest, showActions = true) {
   const imageBlock = dest.image_url
-    ? `<div class="dest-card-image"><img src="${dest.image_url}" alt="${dest.place_name}" loading="lazy" onerror="this.parentElement.outerHTML='<div class=\\"dest-card-placeholder\\">🌍</div>'"></div>`
+    ? `<div class="dest-card-image"><img src="${dest.image_url}" alt="${dest.place_name}" loading="lazy" onerror="this.parentElement.innerHTML='<div style=height:200px;display:flex;align-items:center;justify-content:center;font-size:48px>🌍</div>'"></div>`
     : `<div class="dest-card-placeholder">🌍</div>`;
 
   const visitedBadge = dest.is_visited

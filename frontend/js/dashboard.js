@@ -129,7 +129,7 @@ function renderGrid(destinations) {
 
 function dashCardHTML(dest) {
   const imageBlock = dest.image_url
-    ? `<div class="dest-card-image"><img src="${dest.image_url}" alt="${dest.place_name}" loading="lazy" onerror="this.parentElement.outerHTML='<div class=\\"dest-card-placeholder\\">🌍</div>'"></div>`
+    ? `<div class="dest-card-image"><img src="${dest.image_url}" alt="${dest.place_name}" loading="lazy" onerror="this.parentElement.innerHTML='<div style=height:200px;display:flex;align-items:center;justify-content:center;font-size:48px>🌍</div>'"></div>`
     : `<div class="dest-card-placeholder" style="height:200px;display:flex;align-items:center;justify-content:center;font-size:48px;background:linear-gradient(135deg,var(--bg-elevated),var(--bg-hover))">🌍</div>`;
 
   return `
