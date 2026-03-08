@@ -5,12 +5,27 @@
       "src": "api/index.py",
       "use": "@vercel/python",
       "config": { "maxLambdaSize": "50mb" }
+    },
+    {
+      "src": "*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "css/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "js/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/index.py" },
     { "src": "/api",      "dest": "/api/index.py" },
-    { "handle": "filesystem" },
-    { "src": "/(.*)",     "dest": "/$1" }
+    { "src": "/css/(.*)", "dest": "/css/$1" },
+    { "src": "/js/(.*)",  "dest": "/js/$1" },
+    { "src": "/(.*)\\.html", "dest": "/$1.html" },
+    { "src": "/",         "dest": "/index.html" },
+    { "src": "/(.*)",     "dest": "/$1.html" }
   ]
 }
