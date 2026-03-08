@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile — Wanderlist</title>
+  <link rel="stylesheet" href="css/global.css">
+  <style>
+    .profile-layout{display:grid;grid-template-columns:280px 1fr;gap:40px}
+    .profile-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-xl);padding:32px;text-align:center;position:sticky;top:calc(var(--nav-h) + 24px);height:fit-content}
+    .profile-avatar-wrap{margin-bottom:20px}
+    .profile-name{font-size:1.6rem;margin-bottom:4px}
+    .profile-email{font-size:13px;color:var(--text-2);margin-bottom:8px}
+    .profile-joined{font-size:12px;color:var(--text-m)}
+    .profile-bio{margin-top:16px;padding-top:16px;border-top:1px solid var(--border);font-size:14px;color:var(--text-2);text-align:left;line-height:1.6}
+    .profile-actions{margin-top:20px;display:flex;flex-direction:column;gap:8px}
+    .edit-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-xl);padding:32px}
+    .edit-title{font-size:1.8rem;margin-bottom:24px}
+    @media(max-width:768px){.profile-layout{grid-template-columns:1fr}.profile-card{position:static}}
+  </style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-logo"><div class="navbar-logo-mark">✈</div><span>Wander<span>list</span></span></a>
+    <nav class="navbar-nav">
+      <a href="index.html">Home</a><a href="explore.html">Explore</a><a href="dashboard.html">My List</a>
+    </nav>
+    <div class="navbar-right" data-auth></div>
+    <button class="nav-toggle" id="nav-toggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="navbar-mobile-menu" id="mobile-menu">
+  <a href="index.html">Home</a><a href="explore.html">Explore</a><a href="dashboard.html">My List</a>
+</div>
+
+<main class="page">
+  <div class="container">
+    <div class="profile-layout">
+      <!-- Sidebar -->
+      <div class="profile-card anim-up">
+        <div class="profile-avatar-wrap" id="profile-avatar"></div>
+        <h2 class="profile-name" id="profile-username">—</h2>
+        <p class="profile-email" id="profile-email">—</p>
+        <p class="profile-joined" id="profile-joined">—</p>
+        <div class="profile-bio" id="profile-bio">No bio yet.</div>
+        <div class="profile-actions">
+          <a href="dashboard.html" class="btn-ghost btn-sm" style="justify-content:center">My Bucket List</a>
+          <button class="btn-ghost btn-sm" id="logout-btn" style="color:var(--red);border-color:var(--red-d)">Log Out</button>
+        </div>
+      </div>
+
+      <!-- Edit form -->
+      <div class="edit-card anim-up" style="animation-delay:.1s">
+        <h2 class="edit-title">Edit Profile</h2>
+        <form id="profile-form">
+          <div class="form-group">
+            <label class="form-label">Username</label>
+            <input id="form-username" class="form-input" placeholder="Your username">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Bio</label>
+            <textarea id="form-bio" class="form-textarea" placeholder="Tell the world about your travel passion…" style="height:100px"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Avatar URL</label>
+            <input id="form-avatar" class="form-input" placeholder="https://… (link to a profile photo)">
+          </div>
+          <button type="submit" class="btn-accent" id="profile-save-btn">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="js/api.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/profile.js"></script>
+<script>initNavbar();initProfilePage();</script>
+</body>
+</html>

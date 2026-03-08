@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore — Wanderlist</title>
+  <link rel="stylesheet" href="css/global.css">
+  <style>
+    .explore-hero{background:linear-gradient(to bottom,var(--bg-el),var(--bg));padding:48px 0 32px;border-bottom:1px solid var(--border)}
+    .explore-title{font-size:clamp(2rem,5vw,3.5rem);margin-bottom:8px}
+    .explore-sub{color:var(--text-2);font-size:1.05rem}
+    .search-bar{display:flex;align-items:center;gap:10px;background:var(--bg-el);border:1px solid var(--border-s);border-radius:var(--r-f);padding:12px 18px;margin:24px 0 16px}
+    .search-bar input{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:15px}
+    .search-bar input::placeholder{color:var(--text-m)}
+    .filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+    .exp-filter-btn{padding:7px 16px;background:var(--bg-el);border:1px solid var(--border);border-radius:var(--r-f);font-size:13px;color:var(--text-2);transition:all var(--tr);cursor:pointer}
+    .exp-filter-btn:hover{border-color:var(--border-s);color:var(--text)}
+    .exp-filter-btn.active{background:var(--accent-d);border-color:var(--accent);color:var(--accent)}
+    .results-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;color:var(--text-2);font-size:13px}
+    .explore-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
+    .load-more-wrap{text-align:center;margin-top:48px}
+  </style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-logo"><div class="navbar-logo-mark">✈</div><span>Wander<span>list</span></span></a>
+    <nav class="navbar-nav">
+      <a href="index.html">Home</a>
+      <a href="explore.html" class="active">Explore</a>
+      <a href="dashboard.html">My List</a>
+    </nav>
+    <div class="navbar-right" data-auth></div>
+    <button class="nav-toggle" id="nav-toggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="navbar-mobile-menu" id="mobile-menu">
+  <a href="index.html">Home</a><a href="explore.html">Explore</a><a href="dashboard.html">My List</a>
+</div>
+
+<div class="explore-hero" style="margin-top:var(--nav-h)">
+  <div class="container">
+    <h1 class="explore-title anim-up">Explore the World</h1>
+    <p class="explore-sub anim-up">Discover destinations shared by travelers worldwide</p>
+  </div>
+</div>
+
+<main class="page" style="padding-top:32px">
+  <div class="container">
+    <div class="search-bar">
+      <span>🔍</span>
+      <input id="explore-search" type="text" placeholder="Search by place, city, or country…">
+    </div>
+    <div class="filter-row">
+      <button class="exp-filter-btn active" data-country="">🌍 All</button>
+      <button class="exp-filter-btn" data-country="France">🗼 France</button>
+      <button class="exp-filter-btn" data-country="Japan">🇯🇵 Japan</button>
+      <button class="exp-filter-btn" data-country="Italy">🇮🇹 Italy</button>
+      <button class="exp-filter-btn" data-country="USA">🗽 USA</button>
+      <button class="exp-filter-btn" data-country="Pakistan">🇵🇰 Pakistan</button>
+      <button class="exp-filter-btn" data-country="Thailand">🇹🇭 Thailand</button>
+      <button class="exp-filter-btn" data-country="Turkey">🇹🇷 Turkey</button>
+    </div>
+    <div class="results-bar"><span id="results-count"></span></div>
+    <div class="explore-grid" id="explore-grid"></div>
+    <div class="load-more-wrap">
+      <button class="btn-ghost" id="load-more-btn" style="display:none">Load More ↓</button>
+    </div>
+  </div>
+</main>
+
+<script src="js/api.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/explore.js"></script>
+<script>initNavbar();initExplorePage();</script>
+</body>
+</html>

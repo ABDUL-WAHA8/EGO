@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wanderlist — Your Travel Bucket List</title>
+  <link rel="stylesheet" href="css/global.css">
+  <style>
+    .hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
+    .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(201,169,110,.08) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(91,142,230,.05) 0%,transparent 50%);z-index:0}
+    .hero-content{position:relative;z-index:1;max-width:680px}
+    .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:var(--accent-d);border:1px solid rgba(201,169,110,.2);border-radius:var(--r-f);font-size:12px;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin-bottom:28px}
+    .hero-title{font-size:clamp(3rem,8vw,5.5rem);line-height:1.05;margin-bottom:24px}
+    .hero-title em{font-style:italic;color:var(--accent)}
+    .hero-desc{font-size:1.15rem;color:var(--text-2);line-height:1.75;max-width:540px;margin-bottom:36px}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+    .hero-stat{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--text-2)}
+    .hero-stats{display:flex;gap:28px;margin-top:52px;padding-top:36px;border-top:1px solid var(--border);flex-wrap:wrap}
+    .hero-stat-num{font-family:var(--font-d);font-size:1.6rem;color:var(--text);display:block}
+    .section{padding:80px 0;border-top:1px solid var(--border)}
+    .section-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+    .section-title{font-size:clamp(2rem,4vw,3rem);margin-bottom:16px}
+    .section-sub{color:var(--text-2);font-size:1.05rem;max-width:520px}
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+    .feature-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:28px;transition:border-color var(--tr)}
+    .feature-card:hover{border-color:var(--border-s)}
+    .feature-icon{font-size:32px;margin-bottom:16px;display:block}
+    .feature-title{font-size:1.15rem;margin-bottom:8px}
+    .feature-desc{font-size:14px;color:var(--text-2);line-height:1.65}
+    .cta-section{background:linear-gradient(135deg,var(--bg-el),var(--bg-card));border:1px solid var(--border-s);border-radius:var(--r-xl);padding:64px;text-align:center;margin:80px 0}
+    .cta-title{font-size:clamp(2rem,5vw,3.5rem);margin-bottom:16px}
+    .cta-sub{color:var(--text-2);margin-bottom:36px;font-size:1.05rem}
+    footer{border-top:1px solid var(--border);padding:32px 0;text-align:center;color:var(--text-2);font-size:14px}
+    @media(max-width:768px){.features{grid-template-columns:1fr}.hero-stats{gap:20px}.cta-section{padding:40px 24px}}
+  </style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-logo"><div class="navbar-logo-mark">✈</div><span>Wander<span>list</span></span></a>
+    <nav class="navbar-nav">
+      <a href="index.html" class="active">Home</a>
+      <a href="explore.html">Explore</a>
+      <a href="dashboard.html">My List</a>
+    </nav>
+    <div class="navbar-right" data-auth></div>
+    <button class="nav-toggle" id="nav-toggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="navbar-mobile-menu" id="mobile-menu">
+  <a href="index.html">Home</a><a href="explore.html">Explore</a><a href="dashboard.html">My List</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="container">
+    <div class="hero-content anim-up">
+      <div class="hero-eyebrow">✈ Your travel companion</div>
+      <h1 class="hero-title">Dream it.<br><em>Plan it.</em><br>Live it.</h1>
+      <p class="hero-desc">Build your ultimate travel bucket list, discover destinations shared by adventurers worldwide, and track every place you've conquered.</p>
+      <div class="hero-actions">
+        <a href="register.html" class="btn-accent">Start Your List →</a>
+        <a href="explore.html" class="btn-ghost">Explore Destinations</a>
+      </div>
+      <div class="hero-stats">
+        <div><span class="hero-stat-num">∞</span><span style="font-size:13px;color:var(--text-2)">Destinations to discover</span></div>
+        <div><span class="hero-stat-num">Free</span><span style="font-size:13px;color:var(--text-2)">Always & forever</span></div>
+        <div><span class="hero-stat-num">✈</span><span style="font-size:13px;color:var(--text-2)">Start today</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">What you get</div>
+    <h2 class="section-title">Everything a traveler needs</h2>
+    <p class="section-sub">One place for all your travel dreams — from planning to memories.</p>
+    <div class="features">
+      <div class="feature-card anim-up">
+        <span class="feature-icon">🗺️</span>
+        <h3 class="feature-title">Personal Bucket List</h3>
+        <p class="feature-desc">Add any destination on earth. Mark as visited, add notes, images, and track your journey over time.</p>
+      </div>
+      <div class="feature-card anim-up" style="animation-delay:.1s">
+        <span class="feature-icon">🌍</span>
+        <h3 class="feature-title">Explore Community</h3>
+        <p class="feature-desc">Discover destinations shared by travelers worldwide. Get inspired by real people's adventures.</p>
+      </div>
+      <div class="feature-card anim-up" style="animation-delay:.2s">
+        <span class="feature-icon">💬</span>
+        <h3 class="feature-title">Tips & Comments</h3>
+        <p class="feature-desc">Share travel tips, read advice from other travelers, and like destinations that inspire you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="container">
+  <div class="cta-section anim-up">
+    <h2 class="cta-title">Ready to start your journey?</h2>
+    <p class="cta-sub">Join thousands of travelers building their bucket lists.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="register.html" class="btn-accent">Create Free Account</a>
+      <a href="explore.html" class="btn-ghost">Browse Destinations</a>
+    </div>
+  </div>
+</div>
+
+<footer><div class="container">© 2025 Wanderlist — Built for dreamers and travelers ✈</div></footer>
+
+<script src="js/api.js"></script>
+<script src="js/utils.js"></script>
+<script>initNavbar();</script>
+</body>
+</html>

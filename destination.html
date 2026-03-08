@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Destination — Wanderlist</title>
+  <link rel="stylesheet" href="css/global.css">
+  <style>
+    .dest-hero{height:420px;position:relative;overflow:hidden;background:var(--bg-el);margin-top:var(--nav-h)}
+    .dest-hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,var(--bg) 100%)}
+    .dest-back{position:absolute;top:20px;left:24px;z-index:2;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-f);padding:8px 16px;font-size:13px;color:#fff;transition:all var(--tr)}
+    .dest-back:hover{background:rgba(0,0,0,.7)}
+    .dest-layout{display:grid;grid-template-columns:1fr 300px;gap:48px;padding-top:32px}
+    .dest-meta{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+    .dest-title{font-size:clamp(2rem,5vw,3.2rem);margin-bottom:20px;line-height:1.1}
+    .dest-desc{font-size:1.05rem;color:var(--text-2);line-height:1.75;margin-bottom:28px}
+    .dest-notes{background:var(--bg-el);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:var(--r-md);padding:20px;margin-bottom:28px}
+    .dest-notes-label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+    .dest-notes-text{font-size:14px;color:var(--text-2);line-height:1.7}
+    .section-title{font-size:1.5rem;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+    .sidebar-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;margin-bottom:16px}
+    .sidebar-label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-m);margin-bottom:14px}
+    .author-block{display:flex;align-items:center;gap:12px}
+    .author-info h4{font-size:1rem;margin-bottom:2px}
+    .author-info p{font-size:12px;color:var(--text-2)}
+    .stat-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px}
+    .stat-row:last-child{border-bottom:none}
+    .stat-val{font-weight:600;color:var(--text)}
+    .sidebar-actions{display:flex;flex-direction:column;gap:8px}
+    .comment-form{margin-bottom:28px}
+    .comment-form textarea{width:100%;background:var(--bg-el);border:1px solid var(--border-s);color:var(--text);border-radius:var(--r-md);padding:12px 14px;min-height:90px;resize:vertical;outline:none;transition:border-color var(--tr);font-family:var(--font-b);font-size:14px}
+    .comment-form textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-d)}
+    .comment-form textarea::placeholder{color:var(--text-m)}
+    .comment-submit{margin-top:10px}
+    .login-prompt{background:var(--bg-el);border:1px solid var(--border);border-radius:var(--r-md);padding:16px;font-size:14px;color:var(--text-2);margin-bottom:20px}
+    .login-prompt a{color:var(--accent)}
+    @media(max-width:900px){.dest-layout{grid-template-columns:1fr}.dest-hero{height:280px}}
+  </style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-logo"><div class="navbar-logo-mark">✈</div><span>Wander<span>list</span></span></a>
+    <nav class="navbar-nav">
+      <a href="index.html">Home</a><a href="explore.html">Explore</a><a href="dashboard.html">My List</a>
+    </nav>
+    <div class="navbar-right" data-auth></div>
+    <button class="nav-toggle" id="nav-toggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="navbar-mobile-menu" id="mobile-menu">
+  <a href="index.html">Home</a><a href="explore.html">Explore</a><a href="dashboard.html">My List</a>
+</div>
+
+<div class="dest-hero">
+  <div id="dest-hero-media" style="width:100%;height:100%"></div>
+  <div class="dest-hero-overlay"></div>
+  <a href="javascript:history.back()" class="dest-back">← Back</a>
+</div>
+
+<main class="container" id="dest-main">
+  <div class="dest-layout">
+    <!-- Main -->
+    <div class="anim-up">
+      <div class="dest-meta" id="dest-meta"></div>
+      <h1 class="dest-title" id="dest-title">Loading…</h1>
+      <p class="dest-desc" id="dest-description"></p>
+      <div class="dest-notes" id="dest-notes-block" style="display:none">
+        <div class="dest-notes-label">✏ Personal Notes</div>
+        <p class="dest-notes-text" id="dest-notes-text"></p>
+      </div>
+
+      <!-- Comments -->
+      <h2 class="section-title">Travel Tips & Comments <span style="font-size:16px;font-family:var(--font-b);color:var(--text-2);font-weight:400">(<span id="comments-count">0</span>)</span></h2>
+
+      <div id="comment-login-prompt" style="display:none" class="login-prompt">
+        <a href="login.html">Sign in</a> to leave a comment or travel tip.
+      </div>
+
+      <div class="comment-form" id="comment-form">
+        <textarea id="comment-input" placeholder="Share a travel tip, experience, or advice…"></textarea>
+        <button class="btn-accent btn-sm comment-submit" id="comment-submit">Post Comment</button>
+      </div>
+
+      <div id="comments-list">
+        <div class="skel" style="height:80px;margin-bottom:12px"></div>
+        <div class="skel" style="height:80px"></div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="anim-up" style="animation-delay:.1s">
+      <div class="sidebar-card">
+        <div class="sidebar-label">Posted by</div>
+        <div class="author-block">
+          <div id="author-avatar"></div>
+          <div class="author-info">
+            <h4 id="author-name">—</h4>
+            <p id="author-joined">—</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="sidebar-label">Details</div>
+        <div class="stat-row"><span>Likes</span><span class="stat-val" id="stat-likes">—</span></div>
+        <div class="stat-row"><span>Comments</span><span class="stat-val" id="stat-comments">—</span></div>
+        <div class="stat-row"><span>Added</span><span class="stat-val" id="stat-added">—</span></div>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="sidebar-actions">
+          <button class="btn-like" id="like-btn">♡ Like</button>
+          <button class="btn-ghost" id="share-btn" style="width:100%;justify-content:center">🔗 Share</button>
+          <a href="explore.html" class="btn-ghost" style="width:100%;justify-content:center;text-align:center">← All Destinations</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<script src="js/api.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/destination.js"></script>
+<script>initNavbar();initDestinationPage();</script>
+</body>
+</html>

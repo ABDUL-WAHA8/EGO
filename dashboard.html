@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Bucket List — Wanderlist</title>
+  <link rel="stylesheet" href="css/global.css">
+  <style>
+    .dash-header{padding:40px 0 24px;border-bottom:1px solid var(--border);margin-bottom:32px}
+    .dash-greeting{font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:4px}
+    .dash-sub{color:var(--text-2);font-size:1rem}
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+    .stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;text-align:center}
+    .stat-num{font-family:var(--font-d);font-size:2.2rem;color:var(--accent);display:block;margin-bottom:4px}
+    .stat-lbl{font-size:12px;color:var(--text-2);letter-spacing:.05em;text-transform:uppercase}
+    .dash-controls{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+    .filter-group{display:flex;gap:6px}
+    .filter-btn{padding:7px 16px;background:var(--bg-el);border:1px solid var(--border);border-radius:var(--r-f);font-size:13px;color:var(--text-2);transition:all var(--tr);cursor:pointer}
+    .filter-btn.active{background:var(--accent-d);border-color:var(--accent);color:var(--accent)}
+    .filter-btn:hover:not(.active){border-color:var(--border-s);color:var(--text)}
+    .search-wrap{position:relative;flex:1;max-width:320px}
+    .search-wrap input{width:100%;background:var(--bg-el);border:1px solid var(--border-s);color:var(--text);border-radius:var(--r-f);padding:8px 14px 8px 36px;font-size:14px;outline:none;transition:border-color var(--tr)}
+    .search-wrap input:focus{border-color:var(--accent)}
+    .search-wrap::before{content:'🔍';position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:13px}
+    .dest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:24px}
+    /* Modal form */
+    .modal-form{display:flex;flex-direction:column;gap:0}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(max-width:768px){.stats-row{grid-template-columns:repeat(2,1fr)}.dash-controls{flex-direction:column;align-items:flex-start}.search-wrap{max-width:100%;width:100%}.form-row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-logo"><div class="navbar-logo-mark">✈</div><span>Wander<span>list</span></span></a>
+    <nav class="navbar-nav">
+      <a href="index.html">Home</a><a href="explore.html">Explore</a><a href="dashboard.html" class="active">My List</a>
+    </nav>
+    <div class="navbar-right" data-auth></div>
+    <button class="nav-toggle" id="nav-toggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="navbar-mobile-menu" id="mobile-menu">
+  <a href="index.html">Home</a><a href="explore.html">Explore</a><a href="dashboard.html">My List</a>
+</div>
+
+<main class="page">
+  <div class="container">
+    <div class="dash-header anim-up">
+      <h1 class="dash-greeting" id="dash-greeting">My Bucket List</h1>
+      <p class="dash-sub">Your travel dreams, all in one place</p>
+    </div>
+
+    <div class="stats-row anim-up">
+      <div class="stat-card"><span class="stat-num" id="stat-total">0</span><span class="stat-lbl">Total</span></div>
+      <div class="stat-card"><span class="stat-num" id="stat-visited">0</span><span class="stat-lbl">Visited</span></div>
+      <div class="stat-card"><span class="stat-num" id="stat-wishlist">0</span><span class="stat-lbl">Wishlist</span></div>
+      <div class="stat-card"><span class="stat-num" id="stat-countries">0</span><span class="stat-lbl">Countries</span></div>
+    </div>
+
+    <div class="dash-controls anim-up">
+      <div class="filter-group">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="wishlist">Wishlist</button>
+        <button class="filter-btn" data-filter="visited">Visited</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="search-wrap"><input id="dest-search" type="text" placeholder="Search destinations…"></div>
+        <button class="btn-accent btn-sm" id="add-dest-btn">+ Add</button>
+      </div>
+    </div>
+
+    <div class="dest-grid" id="dest-grid"></div>
+  </div>
+</main>
+
+<!-- ADD/EDIT MODAL -->
+<div class="modal-overlay" id="dest-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modal-title">Add Destination</h2>
+      <button class="modal-close" id="modal-close">×</button>
+    </div>
+    <form id="dest-form" class="modal-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Place Name *</label>
+          <input id="place_name" class="form-input" placeholder="e.g. Eiffel Tower">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Country *</label>
+          <input id="country" class="form-input" placeholder="e.g. France">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">City</label>
+        <input id="city" class="form-input" placeholder="e.g. Paris">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea id="description" class="form-textarea" placeholder="What makes this place special?" style="height:80px"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Personal Notes</label>
+        <textarea id="notes" class="form-textarea" placeholder="Your private notes, tips, plans…" style="height:70px"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Image URL</label>
+        <input id="image_url" class="form-input" placeholder="https://… (leave blank for auto image)">
+      </div>
+      <div class="toggle-wrap">
+        <span class="toggle-label">Mark as Visited</span>
+        <label class="toggle"><input type="checkbox" id="is_visited"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="toggle-wrap">
+        <span class="toggle-label">Share Publicly</span>
+        <label class="toggle"><input type="checkbox" id="is_public" checked><span class="toggle-slider"></span></label>
+      </div>
+      <div style="margin-top:20px">
+        <button type="submit" class="btn-accent" id="dest-submit-btn" style="width:100%;justify-content:center">Add to Bucket List</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/dashboard.js"></script>
+<script>initNavbar();initDashboard();</script>
+</body>
+</html>
